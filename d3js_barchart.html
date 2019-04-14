@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    app\templates\app\d3js_barchart.html 
+{% extends "app/layout.html" %} 
+
+ 
+
+{% block content %} 
+
+ 
+
+<script src="http://d3js.org/d3.v3.min.js"></script> 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+
+ 
+
+<h2>{{ title }}.</h2> 
+
+<h3>{{ message }}</h3> 
+
+ 
+
+<address> 
+
+    One Microsoft Way<br /> 
+
+    Redmond, WA 98052-6399<br /> 
+
+    <abbr title="Phone">P:</abbr> 
+
+    425.555.0100 
+
+</address> 
+
+ 
+
+<address> 
+
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br /> 
+
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a> 
+
+</address> 
+
+ 
+
+<svg></svg> 
+
+ 
+
+<script> 
+
+    var dataset = [ 
+
+        {"id":  1, "description" : "North", "value": 25 }, 
+
+        { "id": 2, "description": "South", "value": 15 } 
+
+    ] 
+
+ 
+
+    $.ajax({ 
+
+        type: "GET", 
+
+        contentType: "application/json", 
+
+        dataType: "json", 
+
+        async: false, 
+
+        url: '../api/barchart_data', 
+
+        success: function (msg) { 
+
+            if (typeof msg != 'undefined') { 
+
+                dataset = msg.data; 
+
+            } 
+
+        }, 
+
+        error: function (xhr, status, error) { 
+
+        } 
+
+    }); 
+
+ 
+
+ 
+
+ 
+
+    var svgWidth = 500; 
+
+    var svgHeight = 100; 
+
+    var svg = d3.select('svg') 
+
+    .attr("width", svgWidth) 
+
+    .attr("height", svgHeight) 
+
+    .attr("class", "bar-chart"); 
+
+ 
+
+    var barPadding = 5; 
+
+    var barWidth = (svgWidth / dataset.length); 
+
+    var barChart = svg.selectAll("rect") 
+
+    .data(dataset) 
+
+    .enter() 
+
+    .append("rect") 
+
+     .attr("y", function(d) { 
+
+        return svgHeight - d.value 
+
+    }) 
+
+    .attr("height", function(d) { 
+
+        return d.value; 
+
+        }) 
+
+ 
+
+    .attr("width", barWidth - barPadding) 
+
+    .attr("transform", function (d, i) { 
+
+         var translate = [barWidth * i, 0]; 
+
+         return "translate("+ translate +")"; 
+
+    }); 
+
+ 
+
+</script> 
+
+ 
+
+ 
+
+ 
+
+ 
+
+{% endblock %} 
+</address> 
+</body>
+</html>
