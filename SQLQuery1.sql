@@ -1,0 +1,1 @@
+select * from TBL_D17125670;
