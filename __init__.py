@@ -1,3 +1,3 @@
 """
-Package for DjangoWebProject1.
+Package for the application.
 """
